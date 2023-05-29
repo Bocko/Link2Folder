@@ -41,7 +41,6 @@ namespace Link2Folder
                     default:
                     {
                         string path = CleanPath(args[0]);
-                        Console.WriteLine(path);
                         OpenFolder(path);
                     }
                     break;
