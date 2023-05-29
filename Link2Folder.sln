@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link2Folder", "Link2Folder.csproj", "{A822DA26-6EE4-4F6C-AF02-4B304C6893D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A822DA26-6EE4-4F6C-AF02-4B304C6893D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A822DA26-6EE4-4F6C-AF02-4B304C6893D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A822DA26-6EE4-4F6C-AF02-4B304C6893D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A822DA26-6EE4-4F6C-AF02-4B304C6893D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12694B51-7BF5-4FD6-A09C-E65F4A869DE7}
+	EndGlobalSection
+EndGlobal

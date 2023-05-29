@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Link2Folder": {
+      "commandName": "Project",
+      "commandLineArgs": "setup"
+    }
+  }
+}
