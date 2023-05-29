@@ -4,7 +4,7 @@
 - Note: As far as I know (I was lazy to research), this only works for Windows
 
 # Demo
-https://github.com/Bocko/Link2Folder/assets/61477246/3ccb73ad-7edb-49ec-ba64-6422ea4342be
+https://github.com/Bocko/Link2Folder/assets/61477246/1edd2be4-57df-47e6-8b57-f06eed9b0b74
 
 # How it works
 The app uses the [Pluggable Protocol](https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa767916(v=vs.85)) to launch itself, which will then open specified folder.
