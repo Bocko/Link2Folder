@@ -64,7 +64,7 @@ namespace Link2Folder
             }
             else
             {
-                Console.WriteLine("Old egistry keys found, deleting them to create new ones!");
+                Console.WriteLine("Old registry keys found, deleting them to create new ones!");
                 DeleteOldRegistryKeys();
             }
 
