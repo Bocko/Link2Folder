@@ -36,6 +36,6 @@ If done correctly, now all you need to do is double click on the shortcut and it
 
 ## III. Creating links
 With the setup done, now you can create your links!
-Just take the path of something you want to link to paste it after this `link2folder:\\`.
+Just take the path of something you want to link to paste it after this `link2folder:\\<your path here>`.
 - Note: If you want to add links to html files, you need to put an additional backslash (\) after every backslash.
 This is to let html know that it's just a backslash character and not a part of an element.
