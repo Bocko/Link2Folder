@@ -61,21 +61,23 @@ namespace Link2Folder
             if (!Registry.ClassesRoot.GetSubKeyNames().Contains(RegistryKeyName))
             {
                 Console.WriteLine("Registry key for app URI Scheme not found!");
-                Console.WriteLine("Creating Registry keys!");
-
-                CreateRegistyKeys();
-
-                Console.WriteLine("Finished Registry Key Creation!");
-                Console.WriteLine("Now You Can Use \"link2folder://<path to folder to open>\" In Your Browser!");
             }
             else
             {
-                Console.WriteLine($"Registry keys found! {AppName} is ready!");
+                Console.WriteLine("Old egistry keys found, deleting them to create new ones!");
+                DeleteOldRegistryKeys();
             }
+
+            CreateRegistryKeys();
+
+            Console.WriteLine("Finished Registry Key Creation!");
+            Console.WriteLine("Now You Can Use \"link2folder://<path to folder to open>\" In Your Browser!");
         }
 
-        private static void CreateRegistyKeys()
+        private static void CreateRegistryKeys()
         {
+            Console.WriteLine("Creating Registry keys!");
+
             RegistryKey key;
             key = Registry.ClassesRoot.CreateSubKey(RegistryKeyName);
             key.SetValue("", $"URL: {AppName} Protocol");
@@ -88,6 +90,11 @@ namespace Link2Folder
             key = key.CreateSubKey("Open");
             key = key.CreateSubKey("Command");
             key.SetValue("", $"\"{GetCurrentPathToExe()}\" \"%1\"");
+        }
+
+        private static void DeleteOldRegistryKeys()
+        {
+            Registry.ClassesRoot.DeleteSubKeyTree(RegistryKeyName);
         }
 
         private static string GetCurrentPathToExe()
