@@ -49,7 +49,7 @@ namespace Link2Folder
             }
             else
             {
-                Console.WriteLine("No Argument(s) Recieved");
+                Console.WriteLine("No Argument(s) Received");
             }
         }
 
