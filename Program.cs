@@ -11,8 +11,9 @@ namespace Link2Folder
 
         private const string SetupArg = "setup";
 
-        private const string UrlPrefix = RegistryKeyName + "://";
         private const string BackslashCode = "%5C";
+        private const string UrlPrefixForwardSlash = RegistryKeyName + "://";
+        private const string UrlPrefixBackSlash = RegistryKeyName + @":\\";
 
         private static readonly string WindowsLocation = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
         private const string FileExplorerExecutable = @"\explorer.exe";
@@ -144,9 +145,9 @@ namespace Link2Folder
 
         private static string? CleanPath(string path)
         {
-            path = path.Replace(UrlPrefix, "");
             path = path.Replace(BackslashCode, @"\");
-            path = path.Replace("/", "");
+            path = path.Replace(UrlPrefixForwardSlash, "");
+            path = path.Replace(UrlPrefixBackSlash, "");
             path = Path.GetFullPath(path);
 
             try
