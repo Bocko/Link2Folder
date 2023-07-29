@@ -14,7 +14,8 @@ namespace Link2Folder
         private const string UrlPrefix = RegistryKeyName + "://";
         private const string BackslashCode = "%5C";
 
-        private const string FileExplorerLocation = @"C:\Windows\explorer.exe";
+        private static readonly string WindowsLocation = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+        private const string FileExplorerExecutable = @"\explorer.exe";
 
         static void Main(string[] args)
         {
@@ -24,13 +25,10 @@ namespace Link2Folder
                 {
                     case SetupArg:
                     {
-                        //SetupRegistryKeys();
                         if (IsAdministrator())
                         {
                             RegistryKeysSetup();
-
-                            Console.WriteLine("\nPress Any Key To Close.");
-                            Console.ReadKey();
+                            WaitForUserInput();
                         }
                         else
                         {
@@ -40,8 +38,16 @@ namespace Link2Folder
                     break;
                     default:
                     {
-                        string path = CleanPath(args[0]);
-                        OpenFolder(path);
+                        string? path = CleanPath(args[0]);
+                        if (path != null)
+                        {
+                            OpenFolder(path);
+                        }
+                        else
+                        {
+                            Console.WriteLine("The Provided Path Is Invalid!");
+                            WaitForUserInput();
+                        }
                     }
                     break;
                 }
@@ -50,7 +56,14 @@ namespace Link2Folder
             else
             {
                 Console.WriteLine("No Argument(s) Received");
+                WaitForUserInput();
             }
+        }
+
+        private static void WaitForUserInput()
+        {
+            Console.WriteLine("\nPress Any Key To Close.");
+            Console.ReadKey();
         }
 
         #region Registry Setup
@@ -129,27 +142,36 @@ namespace Link2Folder
 
         #region Folder Opening
 
-        private static string CleanPath(string path)
+        private static string? CleanPath(string path)
         {
             path = path.Replace(UrlPrefix, "");
             path = path.Replace(BackslashCode, @"\");
             path = path.Replace("/", "");
+            path = Path.GetFullPath(path);
 
-            FileAttributes attr = File.GetAttributes(path);
-
-            //detect whether its a directory or file
-            if (!attr.HasFlag(FileAttributes.Directory))
+            try
             {
-                //hopefully forcing it to be a folder only
-                path = path.Substring(0, path.LastIndexOf(@"\") + 1);
-            }
+                FileAttributes attr = File.GetAttributes(path);
 
-            return path;
+                //detect whether its a directory or file
+                if (!attr.HasFlag(FileAttributes.Directory))
+                {
+                    //hopefully forcing it to be a folder only
+                    path = path.Substring(0, path.LastIndexOf(@"\") + 1);
+                }
+
+                return path;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.ToString());
+                return null;
+            }
         }
 
         private static void OpenFolder(string path)
         {
-            Process.Start(FileExplorerLocation, path);
+            Process.Start(WindowsLocation + FileExplorerExecutable, path);
         }
 
         #endregion Folder Opening
