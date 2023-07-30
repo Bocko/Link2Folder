@@ -136,7 +136,16 @@ namespace Link2Folder
                 }
             };
 
-            proc.Start();
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.ToString());
+                Console.WriteLine("Failed To Get Elevated Privileges To Create The Required Registry Keys!");
+                WaitForUserInput();
+            }
         }
 
         #endregion Registry Setup
@@ -152,13 +161,13 @@ namespace Link2Folder
 
             try
             {
+                //hopefully forcing it to be a folder only
+                //deleting the end of the path until we find a folder
                 FileAttributes attr = File.GetAttributes(path);
-
-                //detect whether its a directory or file
-                if (!attr.HasFlag(FileAttributes.Directory))
+                while (!attr.HasFlag(FileAttributes.Directory))
                 {
-                    //hopefully forcing it to be a folder only
-                    path = path.Substring(0, path.LastIndexOf(@"\") + 1);
+                    path = path.Substring(0, path.LastIndexOf(@"\"));
+                    attr = File.GetAttributes(path);
                 }
 
                 return path;
