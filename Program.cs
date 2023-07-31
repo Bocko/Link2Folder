@@ -74,6 +74,7 @@ namespace Link2Folder
 
         #region Registry Setup
 
+        [SupportedOSPlatform("windows")]
         private static void RegistryKeysSetup()
         {
             Console.WriteLine("Starting Setup");
@@ -93,6 +94,7 @@ namespace Link2Folder
             Console.WriteLine("Now You Can Use \"link2folder://<path to folder to open>\" In Your Browser!");
         }
 
+        [SupportedOSPlatform("windows")]
         private static void CreateRegistryKeys()
         {
             Console.WriteLine("Creating Registry keys!");
@@ -111,6 +113,7 @@ namespace Link2Folder
             key.SetValue("", $"\"{GetCurrentPathToExe()}\" \"%1\"");
         }
 
+        [SupportedOSPlatform("windows")]
         private static void DeleteOldRegistryKeys()
         {
             Registry.ClassesRoot.DeleteSubKeyTree(RegistryKeyName);
@@ -121,6 +124,7 @@ namespace Link2Folder
             return $"{AppDomain.CurrentDomain.BaseDirectory}{AppDomain.CurrentDomain.FriendlyName}.exe";
         }
 
+        [SupportedOSPlatform("windows")]
         private static bool IsAdministrator()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
