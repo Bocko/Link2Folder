@@ -1,5 +1,9 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.Versioning;
 using System.Security.Principal;
 
 namespace Link2Folder
@@ -18,6 +22,7 @@ namespace Link2Folder
         private static readonly string WindowsLocation = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
         private const string FileExplorerExecutable = @"\explorer.exe";
 
+        [SupportedOSPlatform("windows")]
         static void Main(string[] args)
         {
             if (args.Length > 0)
@@ -69,6 +74,7 @@ namespace Link2Folder
 
         #region Registry Setup
 
+        [SupportedOSPlatform("windows")]
         private static void RegistryKeysSetup()
         {
             Console.WriteLine("Starting Setup");
@@ -88,6 +94,7 @@ namespace Link2Folder
             Console.WriteLine("Now You Can Use \"link2folder://<path to folder to open>\" In Your Browser!");
         }
 
+        [SupportedOSPlatform("windows")]
         private static void CreateRegistryKeys()
         {
             Console.WriteLine("Creating Registry keys!");
@@ -106,6 +113,7 @@ namespace Link2Folder
             key.SetValue("", $"\"{GetCurrentPathToExe()}\" \"%1\"");
         }
 
+        [SupportedOSPlatform("windows")]
         private static void DeleteOldRegistryKeys()
         {
             Registry.ClassesRoot.DeleteSubKeyTree(RegistryKeyName);
@@ -116,6 +124,7 @@ namespace Link2Folder
             return $"{AppDomain.CurrentDomain.BaseDirectory}{AppDomain.CurrentDomain.FriendlyName}.exe";
         }
 
+        [SupportedOSPlatform("windows")]
         private static bool IsAdministrator()
         {
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
@@ -154,6 +163,7 @@ namespace Link2Folder
 
         private static string? CleanPath(string path)
         {
+            Console.WriteLine("Cleaning Provided Path.");
             path = path.Replace(BackslashCode, @"\");
             path = path.Replace(UrlPrefixForwardSlash, "");
             path = path.Replace(UrlPrefixBackSlash, "");
@@ -164,7 +174,7 @@ namespace Link2Folder
                 //hopefully forcing it to be a folder only
                 //deleting the end of the path until we find a folder
                 FileAttributes attr = File.GetAttributes(path);
-                while (!attr.HasFlag(FileAttributes.Directory))
+                while (!attr.HasFlag(FileAttributes.Directory) || path != "")
                 {
                     path = path.Substring(0, path.LastIndexOf(@"\"));
                     attr = File.GetAttributes(path);
@@ -181,6 +191,7 @@ namespace Link2Folder
 
         private static void OpenFolder(string path)
         {
+            Console.WriteLine("Opening Provided Path.");
             Process.Start(WindowsLocation + FileExplorerExecutable, path);
         }
 
