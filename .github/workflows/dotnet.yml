@@ -37,7 +37,7 @@ jobs:
       with:
         name: link2folder_exe
     - name: Unzip Artifact
-      run: 7z x ./link2folder_exe.zip
+      run: 7z x /home/runner/work/Link2Folder/Link2Folder/link2folder_exe.zip
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -55,6 +55,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./Link2Folder.exe
+        asset_path: /home/runner/work/Link2Folder/Link2Folder/Link2Folder.exe
         asset_name: Link2Folder.exe
         asset_content_type: application/exe
