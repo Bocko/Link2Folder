@@ -22,6 +22,8 @@ namespace Link2Folder
         private static readonly string WindowsLocation = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
         private const string FileExplorerExecutable = @"\explorer.exe";
 
+        private const uint DirectorySearchDepthLimit = 3;
+
         [SupportedOSPlatform("windows")]
         static void Main(string[] args)
         {
@@ -164,21 +166,38 @@ namespace Link2Folder
         private static string? CleanPath(string path)
         {
             Console.WriteLine("Cleaning Provided Path.");
+            Console.WriteLine($"Original Path: {path}");
             path = path.Replace(BackslashCode, @"\");
             path = path.Replace(UrlPrefixForwardSlash, "");
             path = path.Replace(UrlPrefixBackSlash, "");
             path = Path.GetFullPath(path);
+            Console.WriteLine($"Path After First Cleaning: {path}");
 
             try
             {
                 //hopefully forcing it to be a folder only
                 //deleting the end of the path until we find a folder
+                uint depth = 0;
                 FileAttributes attr = File.GetAttributes(path);
-                while (!attr.HasFlag(FileAttributes.Directory) || path != "")
+                while (!attr.HasFlag(FileAttributes.Directory))
                 {
+                    Console.WriteLine($"Path Is Not a Directory! Running Directory Search!\nCurrent Path:{path}");
+                    if (depth == DirectorySearchDepthLimit) 
+                    {
+                        throw new Exception("Reached Depth Limit!");
+                    }
+                    if(path == "")
+                    {
+                        throw new Exception("Path String Is Empty Or Became Empty While Cleaning!");
+                    }
+
                     path = path.Substring(0, path.LastIndexOf(@"\"));
                     attr = File.GetAttributes(path);
+
+                    depth++;
                 }
+
+                Console.WriteLine($"Path After Directory Matching: {path}");
 
                 return path;
             }
