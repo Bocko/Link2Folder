@@ -23,3 +23,11 @@ jobs:
       run: dotnet restore
     - name: Publish
       run: dotnet publish --no-restore -c Release
+    - name: Release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: false
+        files: |
+          D:\a\Link2Folder\Link2Folder\bin\Release\net6.0\win-x64\publish\*.exe
