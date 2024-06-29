@@ -23,11 +23,8 @@ jobs:
       run: dotnet restore
     - name: Publish
       run: dotnet publish --no-restore -c Release
-    - name: Release
-      uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        prerelease: false
-        files: |
-          D:\a\Link2Folder\Link2Folder\bin\Release\net6.0\win-x64\publish\*.exe
+        name: link2folder_exe
+        path: D:\a\Link2Folder\Link2Folder\bin\Release\net6.0\win-x64\publish\Link2Folder.exe
